@@ -60,16 +60,16 @@ class Moondream:
     print(f"[Moondream] found model versions: {', '.join(MODEL_REVISIONS)}")
     MODEL_REVISIONS.insert(0,'ComfyUI/models/moondream2')
 
-    try:
-        print('\033[92m\033[4m[Moondream] model revsion references:\033[0m\033[92m')
-        git_status = Run_git_status(HUGGINGFACE_MODEL_NAME)
-        for s in git_status:
-            print(s)
-        # return ("",)
-    except:
-        pass
-    finally:
-        print('\033[0m')
+    # try:
+    #     print('\033[92m\033[4m[Moondream] model revsion references:\033[0m\033[92m')
+    #     git_status = Run_git_status(HUGGINGFACE_MODEL_NAME)
+    #     for s in git_status:
+    #         print(s)
+    #     # return ("",)
+    # except:
+    #     pass
+    # finally:
+    #     print('\033[0m')
 
 
     def __init__(self):
