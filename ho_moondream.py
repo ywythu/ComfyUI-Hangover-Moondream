@@ -18,6 +18,7 @@ import codecs
 import subprocess
 import os
 import requests
+import folder_paths
 
 def Run_git_status(repo:str) -> list[str]:
     """resturns a list of all model tag references for this huggingface repo"""
@@ -36,30 +37,29 @@ def Run_git_status(repo:str) -> list[str]:
 class Moondream:
     HUGGINGFACE_MODEL_NAME = "vikhyatk/moondream2"
     DEVICES = ["cpu", "gpu"] if torch.cuda.is_available() else  ["cpu"]
-    # Versions = 'versions.txt'
-    # Model_Revisions_URL = f"https://huggingface.co/{HUGGINGFACE_MODEL_NAME}/raw/main/{Versions}"
-    # current_path = os.path.abspath(os.path.dirname(__file__))
-    # try:
-    #     print("[Moondream] trying to update model versions...", end='')
-    #     response = requests.get(Model_Revisions_URL)
-    #     if response.status_code == 200:
-    #         with open(f"{current_path}/{Versions}", 'w') as f:
-    #             f.write(response.text)
-    #         print('ok')
-    # except Exception as e:
-    #     if hasattr(e, 'message'):
-    #         msg = e.message
-    #     else:
-    #         msg = e
-    #     print(f'failed ({msg})')
+    Versions = 'versions.txt'
+    Model_Revisions_URL = f"https://hf-mirror.com/{HUGGINGFACE_MODEL_NAME}/raw/main/{Versions}"
+    current_path = os.path.abspath(os.path.dirname(__file__))
+    try:
+        print("[Moondream] trying to update model versions...", end='')
+        response = requests.get(Model_Revisions_URL)
+        if response.status_code == 200:
+            with open(f"{current_path}/{Versions}", 'w') as f:
+                f.write(response.text)
+            print('ok')
+    except Exception as e:
+        if hasattr(e, 'message'):
+            msg = e.message
+        else:
+            msg = e
+        print(f'failed ({msg})')
 
-    # with open(f"{current_path}/{Versions}", 'r') as f:
-    #     versions = f.read()
+    with open(f"{current_path}/{Versions}", 'r') as f:
+        versions = f.read()
     
-    # MODEL_REVISIONS = [v for v in versions.splitlines() if v.strip()]
-    MODEL_REVISIONS = []
+    MODEL_REVISIONS = [v for v in versions.splitlines() if v.strip()]
     print(f"[Moondream] found model versions: {', '.join(MODEL_REVISIONS)}")
-    MODEL_REVISIONS.insert(0,'models/moondream2')
+    MODEL_REVISIONS.insert(0,'ComfyUI/models/moondream2')
 
     # try:
     #     print('\033[92m\033[4m[Moondream] model revsion references:\033[0m\033[92m')
@@ -128,12 +128,13 @@ class Moondream:
                 model_name = Moondream.HUGGINGFACE_MODEL_NAME
 
             try:
+                model_path = os.path.join(folder_paths.models_dir, "moondream2")
                 self.model = AutoModel.from_pretrained(
-                    model_name, 
+                    model_path,
                     trust_remote_code=trust_remote_code,
                     revision=model_revision
                 ).to(dev)
-                self.tokenizer = Tokenizer.from_pretrained(model_name)
+                self.tokenizer = Tokenizer.from_pretrained(model_path)
             except RuntimeError:
                 raise ValueError(f"[Moondream] Please check if the tramsformer package fulfills the requirements. "
                                   "Also note that older models might not work anymore with newer packages.")
