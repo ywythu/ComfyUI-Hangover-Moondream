@@ -4,6 +4,15 @@
 
 ⚠️ **WARNING: Additional python code will be downloaded from huggingface and executed. You have to trust this creator if you want to use this node!**
 
+## Model Install
+**put the model into models/moondream2**
+
+**huggingface-cli download vikhyatk/moondream2  model.safetensors config.json tokenizer.json  tokenizer_config.json generation_config.json configuration_moondream.py  modeling_phi.py moondream.py vision_encoder.py region_model.py --revision 2024-08-26 --local-dir .**
+
+
+
+
+
 ![Alt text](images/workflow2.png)
 
 👍 For testing, research and fun.
