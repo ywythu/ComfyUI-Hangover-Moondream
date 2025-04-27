@@ -40,24 +40,25 @@ class Moondream:
     Versions = 'versions.txt'
     Model_Revisions_URL = f"https://hf-mirror.com/{HUGGINGFACE_MODEL_NAME}/raw/main/{Versions}"
     current_path = os.path.abspath(os.path.dirname(__file__))
-    try:
-        print("[Moondream] trying to update model versions...", end='')
-        response = requests.get(Model_Revisions_URL)
-        if response.status_code == 200:
-            with open(f"{current_path}/{Versions}", 'w') as f:
-                f.write(response.text)
-            print('ok')
-    except Exception as e:
-        if hasattr(e, 'message'):
-            msg = e.message
-        else:
-            msg = e
-        print(f'failed ({msg})')
+    # try:
+    #     print("[Moondream] trying to update model versions...", end='')
+    #     response = requests.get(Model_Revisions_URL)
+    #     if response.status_code == 200:
+    #         with open(f"{current_path}/{Versions}", 'w') as f:
+    #             f.write(response.text)
+    #         print('ok')
+    # except Exception as e:
+    #     if hasattr(e, 'message'):
+    #         msg = e.message
+    #     else:
+    #         msg = e
+    #     print(f'failed ({msg})')
 
-    with open(f"{current_path}/{Versions}", 'r') as f:
-        versions = f.read()
+    # with open(f"{current_path}/{Versions}", 'r') as f:
+    #     versions = f.read()
+    versions = ["2024-03-04","2024-03-06","2024-03-13","2024-04-02","2024-05-08","2024-05-20","2024-07-23","2024-08-26","2025-01-09","2025-03-27","2025-04-14"]
     
-    MODEL_REVISIONS = [v for v in versions.splitlines() if v.strip()]
+    MODEL_REVISIONS = [v for v in versions]
     print(f"[Moondream] found model versions: {', '.join(MODEL_REVISIONS)}")
     MODEL_REVISIONS.insert(0,'ComfyUI/models/moondream2')
 

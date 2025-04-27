@@ -7,8 +7,8 @@
 ## Model Install
 **put the model into models/moondream2**
 
-**huggingface-cli download vikhyatk/moondream2  model.safetensors config.json tokenizer.json  tokenizer_config.json generation_config.json configuration_moondream.py  modeling_phi.py moondream.py vision_encoder.py region_model.py --revision 2024-08-26 --local-dir .**
-
+**huggingface-cli download vikhyatk/moondream2  model.safetensors config.json tokenizer.json  tokenizer_config.json generation_config.json fourier_features.py configuration_moondream.py  modeling_phi.py moondream.py vision_encoder.py region_model.py --revision 2024-08-26 --local-dir .**
+**.cache/huggingface/modules/transformers_modules/moondream2 也需要**
 
 
 
